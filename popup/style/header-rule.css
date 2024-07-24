@@ -1,0 +1,232 @@
+* {
+	box-sizing: border-box;
+}
+
+svg {
+	height: 1.4em;
+	vertical-align: middle;
+	fill: var(--icon-clr);
+	cursor: pointer;
+}
+
+:host {
+	display: flex;
+	flex-direction: column;
+	row-gap: 0.5em;
+	margin: 0.5em;
+	padding-bottom: 0.4em;
+}
+
+:host([inert]) {
+	opacity: 0.4;
+}
+
+:host(.empty)::before {
+	content: "No headerRule matched.\A click on (add rule) to add rule";
+	white-space: pre;
+	color: red;
+	font-size: 1.2rem;
+	padding: 1em;
+}
+
+rule-card {
+	--bdr-clr: dodgerblue;
+	display: block;
+	padding: 0.4em;
+	border-radius: 0.4em;
+	background-color: light-dark(white, hsl(0, 0%, 16%));
+	box-shadow: var(--card);
+	position: relative;
+
+	&:hover .toggle_rule {
+		opacity: 1;
+	}
+
+	&:has(.toggle_rule:checked) {
+		outline: 1px solid var(--bdr-clr);
+	}
+
+	&:hover {
+		& .edit-icon,
+		& .delete-icon {
+			opacity: 1;
+		}
+	}
+}
+
+.toggle_rule {
+	position: absolute;
+	left: -0.5em;
+	top: -0.5em;
+	scale: 1.2;
+	opacity: 0;
+	accent-color: var(--bdr-clr);
+
+	&:checked {
+		opacity: 1;
+	}
+}
+
+@scope (rule-details) {
+	:scope {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	:scope > div {
+		display: flex;
+		flex-direction: column;
+		row-gap: 0.3em;
+
+		& > label,
+		& > div {
+			font-size: 95%;
+			display: flex;
+			justify-content: space-between;
+			column-gap: 0.4em;
+		}
+
+		&.left-column > div {
+			justify-content: unset;
+		}
+	}
+
+	input[name="rule-name"] {
+		width: 12ch;
+		border: none;
+		background-color: inherit;
+	}
+
+	summary {
+		font-size: 0.9rem;
+	}
+}
+
+#url-filter-popup {
+	position: relative;
+	& summary {
+		max-width: 28ch;
+		text-wrap: nowrap;
+	}
+
+	& .match-urls {
+		position: absolute;
+		z-index: 1;
+		right: 0;
+		padding: 0.4em;
+		max-width: 44ch;
+		box-shadow: var(--card);
+		border-radius: 0.5em;
+		background-color: light-dark(white, hsl(0, 0%, 24%));
+
+		& input {
+			width: 98%;
+			padding-block: 2px;
+		}
+
+		& ul {
+			padding-left: 0.4em;
+			margin-block: 3px 0px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.4em;
+			overflow-x: hidden;
+
+			& .chip-item {
+				display: inline-flex;
+				column-gap: 2px;
+				width: max-content;
+				font-size: small;
+				padding: 2px 0.4em;
+				background-color: light-dark(whitesmoke, hsl(0, 0%, 20%));
+				border-radius: 1em;
+
+				& span {
+					font-size: 0.75rem;
+				}
+
+				& svg {
+					height: 1.1em;
+				}
+			}
+		}
+	}
+}
+
+table {
+	--tbl-border: light-dark(hsl(0, 1%, 85%), hsl(0, 1%, 28%));
+	border-collapse: collapse;
+	position: absolute;
+	z-index: 1;
+	box-shadow: var(--card);
+	background-color: light-dark(white, hsl(0, 0%, 20%));
+
+	& td,
+	& th {
+		border: 1px solid var(--tbl-border);
+		text-align: left;
+		padding: 8px;
+
+		&:last-child {
+			padding: 0;
+
+			& svg {
+				height: 1.2em;
+			}
+		}
+	}
+
+	& tr:nth-child(even) {
+		background-color: var(--tbl-border);
+	}
+
+	& th {
+		text-align: center;
+	}
+
+	input[type="text"] {
+		width: unset;
+		padding: 0.2em;
+	}
+
+	& input[type="checkbox"] {
+		scale: 1.4;
+	}
+}
+
+.right-column table {
+	right: 0;
+}
+
+.edit-icon,
+.delete-icon {
+	position: absolute;
+	opacity: 0;
+	transition: opacity 400ms ease-out 100ms;
+}
+
+.edit-icon {
+	right: -0.5em;
+	top: -0.4em;
+
+	& svg {
+		height: 1.1em;
+	}
+}
+
+.delete-icon {
+	right: -0.5em;
+	bottom: -0.3em;
+
+	& svg {
+		height: 1.1em;
+	}
+}
+
+.close-btn {
+	position: absolute;
+	top: -0.5em;
+	right: -0.5em;
+	opacity: 0;
+	transition: opacity 200ms ease-in-out;
+}

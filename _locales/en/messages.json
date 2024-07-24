@@ -1,0 +1,116 @@
+{
+	"extName": {
+		"message": "fixHeader - modify HTTP headers",
+		"description": "Extension name"
+	},
+
+	"extDescription": {
+		"message": "Modify HTTP request headers, response headers. Open source",
+		"description": "Extension description"
+	},
+
+	"advanced_options": {
+		"message": " Advanced options",
+		"description": " Advanced options"
+	},
+
+	"action": {
+		"message": "Action",
+		"description": "Action"
+	},
+
+	"key": {
+		"message": "Key",
+		"description": "Key"
+	},
+
+	"value": {
+		"message": "Value",
+		"description": "Value"
+	},
+
+	"request": {
+		"message": "Request",
+		"description": "Request"
+	},
+
+	"response": {
+		"message": "Response",
+		"description": "Response"
+	},
+
+	"rule_name": {
+		"message": "Rule name",
+		"description": "Rule name"
+	},
+
+	"priority": {
+		"message": "Priority",
+		"description": "Priority"
+	},
+
+	"match_url": {
+		"message": "Match url",
+		"description": "Match url"
+	},
+
+	"patterns": {
+		"message": "patterns",
+		"description": "patterns"
+	},
+
+	"create_rule": {
+		"message": "Create Rule",
+		"description": "Create Rule"
+	},
+
+	"name": {
+		"message": "Name",
+		"description": "Name"
+	},
+
+	"matches": {
+		"message": "Matches",
+		"description": "matches"
+	},
+
+	"add_rule": {
+		"message": "Add Rule",
+		"description": "Add Rule"
+	},
+
+	"report_bug": {
+		"message": "Report Bug",
+		"description": "Report Bug"
+	},
+
+	"just_one_click": {
+		"message": "Just one click",
+		"description": "Just one Click"
+	},
+
+	"sorry_something_went_wrong": {
+		"message": "Sorry, Something went wrong",
+		"description": "Sorry, Something went wrong"
+	},
+
+	"webpage_permission_required": {
+		"message": "Webpage permission required",
+		"description": "Webpage permission required"
+	},
+
+	"permission_required_to_modify_http_headers": {
+		"message": "Webpage permission required to modify http headers",
+		"description": "Permission required to modify http headers"
+	},
+
+	"grant_permission_for_above_webpages": {
+		"message": "Grant Permission for Above webpages",
+		"description": "Grant Permission for Above webpages"
+	},
+
+	"grant_permission_for_all_webpages": {
+		"message": "Grant Permission for All webpages",
+		"description": "Grant Permission for All webpages"
+	}
+}
