@@ -1,7 +1,7 @@
 import { standardRequestHeaders, standardResponseHeaders } from "./constant.js";
+import { ReportBug } from "../components/helper/report-bug.js";
 import { getAllHeaderRules } from "../db/header-rule-db.js";
 import { HeaderRule } from "../db/HeaderRule.js";
-import { ReportBug } from "../components/helper/report-bug.js";
 
 /**@param {HeaderRule} headerRule*/
 export async function registerHeaderRule(headerRule) {
@@ -13,30 +13,32 @@ export async function registerHeaderRule(headerRule) {
 	}
 
 	const headerItem = (header) => ({
-		operation: header.operation === "append" ? getOperation(header.key) : header.operation,
-		header: header.key.trim(),
+		operation: header.operation === "append" ? getOperation(header.key ?? header.header) : header.operation,
+		header: header.key?.trim() ?? header.header?.trim(),
 		value: header.operation !== "remove" ? header.value.trim() : "",
 	});
+
+	const getRandomInt = () => Math.floor(Math.random() * 1000);
 
 	/**@type {(urlFilter:string,index:number)=>chrome.declarativeNetRequest.Rule} */
 	const rule = (urlFilter, index) => {
 		const requestHeaders = headerRule.requestHeaders.map(headerItem).filter((rule) => rule.header);
-		const responseHeaders = headerRule.responseHeaders.map(headerItem).filter((rule) => rule.header);
+		const responseHeaders = headerRule.responseHeaders?.map(headerItem).filter((rule) => rule.header);
 		return {
-			id: existingRules.length + 1 + index,
+			id: existingRules.length + 1 + index + getRandomInt(),
 			action: {
 				type: chrome.declarativeNetRequest.RuleActionType.MODIFY_HEADERS,
 				requestHeaders: requestHeaders.length !== 0 ? requestHeaders : undefined,
-				responseHeaders: responseHeaders.length !== 0 ? responseHeaders : undefined,
+				responseHeaders: responseHeaders?.length !== 0 ? responseHeaders : undefined,
 			},
 			condition: {
 				urlFilter: urlFilter,
 				resourceTypes: headerRule.resourceTypes.length !== 0 ? headerRule.resourceTypes : undefined,
 				requestMethods: headerRule.requestMethods.length !== 0 ? headerRule.requestMethods : undefined,
 				excludedResourceTypes:
-					headerRule.excludedResourceTypes.length !== 0 ? headerRule.excludedResourceTypes : undefined,
+					headerRule.excludedResourceTypes?.length !== 0 ? headerRule.excludedResourceTypes : undefined,
 				excludedRequestMethods:
-					headerRule.excludedRequestMethods.length !== 0 ? headerRule.excludedRequestMethods : undefined,
+					headerRule.excludedRequestMethods?.length !== 0 ? headerRule.excludedRequestMethods : undefined,
 			},
 		};
 	};
@@ -50,6 +52,7 @@ export async function registerHeaderRule(headerRule) {
 		notify(error.message, "error");
 		console.error(error);
 		document.body.appendChild(new ReportBug(error));
+		throw new Error(error);
 	}
 }
 
@@ -97,7 +100,7 @@ export async function requestPermission(webpages) {
 	const hasPermission = await chrome.permissions.contains({ origins: webpages });
 	if (hasPermission) return $("rule-editor-dialog")?.remove();
 	const { HostPermission } = await import("../components/helper/host-permission.js");
-	const parentElement = $("rule-editor-dialog").shadowRoot.firstElementChild ?? document.body;
+	const parentElement = $("rule-editor-dialog")?.shadowRoot.firstElementChild ?? document.body;
 	parentElement.appendChild(new HostPermission(webpages));
 }
 
@@ -116,11 +119,3 @@ export async function unRegisterAllHeaderRule() {
 		console.error(error);
 	}
 }
-
-/* 
-sample
-https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/*
-https://developer.mozilla.org/en-US/docs/Web/HTTP/*
-X-Modified-By 
-fixHeader
-*/

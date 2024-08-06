@@ -27,6 +27,20 @@ export async function saveHeaderRuleInDb(headerRule) {
 	});
 }
 
+/**@param {HeaderRule[]} headerRules*/
+export async function insertMultiHeaderRuleInDb(headerRules) {
+	return new Promise((resolve, reject) => {
+		connect().then((db) => {
+			const transaction = db.transaction(Store.HeaderRules, "readwrite");
+			const store = transaction.objectStore(Store.HeaderRules);
+			for (const headerRule of headerRules) store.put(headerRule);
+			transaction.oncomplete = (e) => resolve(e.target["result"]);
+			transaction.onerror = (e) => reject(e);
+			db.close();
+		});
+	});
+}
+
 export async function updateHeaderRuleInDb(id, key, value) {
 	return new Promise((resolve, reject) => {
 		connect().then((db) => {

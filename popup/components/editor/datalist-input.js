@@ -31,7 +31,12 @@ export class DatalistInput extends HTMLElement {
 			html`<li class="chip-item"><span>${page}</span> <web-icon ico="close" title="remove"></web-icon></li>`;
 
 		return html`<label> <input type="checkbox" checked disabled /> ${this.label}</label>
-			<input type="url" name="matches" list="${listId}" @keyup=${this.addItem.bind(this)} />
+			<input
+				type="url"
+				name="matches"
+				list="${listId}"
+				title="Press enter for multi"
+				@keyup=${this.addItem.bind(this)} />
 			<datalist id="${listId}">${this.dataList.map((url) => html`<option value="${url}"></option>`)}</datalist>
 			<ul class="chip-list" @click=${this.removeItem.bind(this)}>
 				${map(this.selectedList, chipItem)}

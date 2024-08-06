@@ -31,7 +31,12 @@ export class UrlFilter extends HTMLElement {
 					${i18n("patterns")}
 				</a>
 			</label>
-			<input type="text" name="match-urls" list="tab-urls" @keyup=${this.addMatchUrls.bind(this)} />
+			<input
+				type="text"
+				name="match-urls"
+				list="tab-urls"
+				title="Press enter for multi"
+				@keyup=${this.addMatchUrls.bind(this)} />
 			<datalist id="tab-urls">${pageUrls.map((url) => html`<option value="${url}"></option>`)}</datalist>
 			<ul class="chip-list" @click=${this.removeMatchUrl.bind(this)}>
 				${map(this.matchUrls, chipItem)}

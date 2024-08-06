@@ -4,16 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>fixHeader configuration</title>
 </head>
 
 <body>
     <button id="export-rules">Export rules</button>
+    <div style="margin-top: 1em;">
+        <div>Pick header rule json file</div>
+        <input type="file" name="import-rules" id="import-rules">
+    </div>
     <script type="module" src="./options.js"></script>
 
     <style>
         :root {
             color-scheme: light dark;
+        }
+
+        body {
+            font-size: 100%;
         }
     </style>
 </body>

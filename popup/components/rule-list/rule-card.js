@@ -22,8 +22,10 @@ export class HeaderRuleCard extends HTMLElement {
 
 	async deleteRule() {
 		try {
+			await unRegisterHeaderRule(this.headerRule.ruleIds);
 			await deleteHeaderRuleInDb(this.headerRule.id);
 			this.remove();
+			toast("Rule deleted");
 		} catch (error) {
 			console.error(error);
 		}
